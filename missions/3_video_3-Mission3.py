@@ -29,5 +29,6 @@ if cap.isOpened():
                 break
         else:
             break
+out.release()
 cap.release()
 cv2.destroyAllWindows()
