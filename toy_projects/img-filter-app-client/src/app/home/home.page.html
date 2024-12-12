@@ -1,0 +1,13 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Blank </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <input type="file" (change)="getImage($event)" />
+  <button (click)="uploadTest()">변환</button>
+  <div *ngFor="let img of convertedImg">
+    <img [src]="img.src" />
+  </div>
+</ion-content>

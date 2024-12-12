@@ -241,4 +241,4 @@ test = ["Cython", "array-api-strict (>=2.0)", "asv", "gmpy2", "hypothesis (>=6.3
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "943b4a79e1da658f062e29c53f54bd42de0fa99c4321069670196e2495cd0654"
+content-hash = "0090738652a7c85acc2831e12f4e0a9129835df1ec026dd72f243dff12f6c3b2"
