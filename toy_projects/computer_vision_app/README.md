@@ -37,7 +37,7 @@
    ```bash
    poetry install
 
-   cd img-filter-app-client
+   cd app-client
    npm install
    ```
 
@@ -45,14 +45,14 @@
 
    ```bash
    # server
-   # go root dict(img_filter_app)
+   # go root dict(computer_vision_app)
    # active virtual env
    poetry shell
 
-   poetry run python ./img_filter_app-server/hello.py
+   poetry run python ./app-server/hello.py
 
    #client
-   cd img-filter-app-client
+   cd app-client
    npm run start
    ```
 
