@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>mosaic</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <input style="width: 30%" type="file" (change)="imageUpload($event)" />
+    </ion-card-header>
+    <ion-card-content>
+      <div style="display: flex; align-items: center">
+        <ion-radio-group
+          [(ngModel)]="method"
+          style="display: flex; flex-direction: column"
+        >
+          <ion-radio value="resize" labelPlacement="end" alignment="start">
+            resize</ion-radio
+          >
+          <ion-radio value="blur" labelPlacement="end" alignment="start">
+            blur</ion-radio
+          >
+          <ion-radio value="gaussian" labelPlacement="end" justify="start">
+            gaussian
+          </ion-radio>
+        </ion-radio-group>
+        <img
+          [src]="convertedImg || 'assets/shapes.svg'"
+          style="width: 100%; height: 200px; object-fit: contain"
+        />
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

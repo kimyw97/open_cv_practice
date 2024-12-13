@@ -1,3 +1,22 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content" when="false">
+    <ion-menu contentId="main-content" side="end">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu Content</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-button expand="full" fill="clear" (click)="go('filter')"
+            >Filter Page</ion-button
+          >
+          <ion-button expand="full" fill="clear" (click)="go('mosaic')"
+            >Mosaic Page</ion-button
+          >
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>

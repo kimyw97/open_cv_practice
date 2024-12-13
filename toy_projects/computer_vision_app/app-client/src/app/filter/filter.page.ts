@@ -13,12 +13,14 @@ import {
   IonImg,
   IonSelect,
   IonSelectOption,
+  IonMenuButton,
+  IonButtons,
 } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: 'filter.page.html',
+  styleUrls: ['filter.page.scss'],
   standalone: true,
   imports: [
     IonHeader,
@@ -32,11 +34,13 @@ import {
     IonCardHeader,
     IonSelect,
     IonSelectOption,
+    IonMenuButton,
+    IonButtons,
     FormsModule,
     CommonModule,
   ],
 })
-export class HomePage {
+export class FilterPage {
   public image: File | undefined;
   public imageSrc: string = '';
   public convertedImg: string = '';

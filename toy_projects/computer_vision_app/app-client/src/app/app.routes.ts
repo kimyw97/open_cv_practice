@@ -2,12 +2,17 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    path: 'filter',
+    loadComponent: () =>
+      import('./filter/filter.page').then((m) => m.FilterPage),
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'filter',
     pathMatch: 'full',
+  },
+  {
+    path: 'mosaic',
+    loadComponent: () => import('./mosaic/mosaic.page').then( m => m.MosaicPage)
   },
 ];

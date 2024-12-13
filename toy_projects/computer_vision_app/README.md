@@ -30,7 +30,7 @@
 1. clone repo
    ```bash
    git clone https://github.com/kimyw97/open_cv_practice.git
-   cd open_cv_practice/toy_projects/img_filter_app
+   cd open_cv_practice/toy_projects/computer_vsion_app
    ```
 2. install package
 
