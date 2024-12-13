@@ -5,9 +5,27 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <input type="file" (change)="getImage($event)" />
-  <button (click)="uploadTest()">변환</button>
-  <div *ngFor="let img of convertedImg">
-    <img [src]="img.src" />
-  </div>
+  <ion-header>
+    <div
+      style="display: flex; justify-content: space-around; align-items: center"
+    >
+      <input style="width: 30%" type="file" (change)="getImage($event)" />
+      <ion-select [(ngModel)]="filter" style="width: 30%">
+        <ion-select-option value="origin">Origin</ion-select-option>
+        <ion-select-option value="gray">Gray</ion-select-option>
+        <ion-select-option value="blur">Blur</ion-select-option>
+        <ion-select-option value="edges">Edges</ion-select-option>
+        <ion-select-option value="sepia">Sepia</ion-select-option>
+        <ion-select-option value="brightness">Brightness</ion-select-option>
+        <ion-select-option value="contrast">Contrast</ion-select-option>
+      </ion-select>
+      <ion-button style="width: 10%" (click)="uploadTest()">convert</ion-button>
+    </div>
+  </ion-header>
+  <ion-card>
+    <ion-card-header> {{filter}} </ion-card-header>
+    <ion-card-content>
+      <img [src]="filter === 'origin' ? imageSrc : convertedImg" />
+    </ion-card-content>
+  </ion-card>
 </ion-content>

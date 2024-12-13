@@ -6,6 +6,13 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonImg,
+  IonSelect,
+  IonSelectOption,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -18,18 +25,33 @@ import {
     IonToolbar,
     IonTitle,
     IonContent,
+    IonButton,
+    IonImg,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonSelect,
+    IonSelectOption,
     FormsModule,
     CommonModule,
   ],
 })
 export class HomePage {
   public image: File | undefined;
-  public convertedImg: Array<{ src: string; title: string }> = [];
+  public imageSrc: string = '';
+  public convertedImg: string = '';
+  public filter: string = 'origin';
   constructor() {}
 
   async getImage(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        if (typeof fileReader.result == 'string')
+          this.imageSrc = fileReader.result;
+      };
+      fileReader.readAsDataURL(input.files[0]);
       this.image = input.files[0];
     }
   }
@@ -42,6 +64,7 @@ export class HomePage {
 
     const formData = new FormData();
     formData.append('image', this.image);
+    formData.append('filter', this.filter);
 
     try {
       const response = await fetch('http://localhost:4000/upload', {
@@ -54,7 +77,7 @@ export class HomePage {
       }
       const result = await response.blob();
       const url = URL.createObjectURL(result);
-      this.convertedImg.push({ src: url, title: 'test' });
+      this.convertedImg = url;
       console.log(url);
     } catch (e) {
       console.log(JSON.stringify(e));
