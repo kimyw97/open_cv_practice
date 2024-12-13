@@ -60,6 +60,4 @@
 
 ## 4. 데모 (Demo)
 
-```markdown
 ![App Demo](./demo.gif)
-```
