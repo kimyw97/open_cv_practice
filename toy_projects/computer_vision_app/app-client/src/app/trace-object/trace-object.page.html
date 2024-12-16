@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>trace-object</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-button (click)="startWebCam()">시작</ion-button>
+    </ion-card-header>
+    <ion-card-content>
+      <div style="display: flex; justify-items: space-between">
+        <video #video autoplay style="width: 50%"></video>
+        <canvas #canvas hidden></canvas>
+        <img [src]="processedFrame" style="width: 50%" />
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

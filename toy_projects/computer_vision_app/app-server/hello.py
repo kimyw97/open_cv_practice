@@ -1,8 +1,15 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+from flask_socketio import SocketIO, emit
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
 import numpy as np
 import cv2
-from flask_cors import CORS
+import base64
+import mediapipe as mp
+
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins='*')
 CORS(app)
 
 @app.route('/')
@@ -82,6 +89,53 @@ def mosaic():
     img_stream = buffer.tobytes()
 
     return img_stream, 200, {'Content-Type': 'image/jpeg'}
+
+@socketio.on('send_frame')
+def handle_frame(data):
+    img_data = base64.b64decode(data['frame'])
+    np_img = np.frombuffer(img_data, np.uint8)
+    img = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
+    img = resize_image(img)
+
+    # STEP 2: Create an HandLandmarker object.
+    base_options = python.BaseOptions(model_asset_path='./app-server/hand_landmarker.task')
+    options = vision.HandLandmarkerOptions(base_options=base_options,
+                                       num_hands=2)
+    detector = vision.HandLandmarker.create_from_options(options)
+
+    # STEP 3: Load the input image.
+    image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
+
+    # STEP 4: Detect hand landmarks from the input image.
+    detection_result = detector.detect(image)
+
+    # STEP 5: Process the classification result. In this case, visualize it.
+    annotated_image = draw_landmarks_on_image(image.numpy_view(), detection_result)
+
+    _, buffer = cv2.imencode('.jpg',annotated_image)
+    frame_b64 = base64.b64encode(buffer).decode('utf-8')
+
+
+    socketio.emit('receive_frame', {'frame': frame_b64})
+
+def draw_landmarks_on_image(image,detection_result):
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+    for hand_landmarks in detection_result.hand_landmarks:
+        for landmark in hand_landmarks:
+            x = int(landmark.x * image.shape[1])
+            y = int(landmark.y * image.shape[0])
+            cv2.circle(image, (x,y), 5, (0,255,0),-1)
+    return image
+
+def resize_image(image, max_width=1024, max_height=1024):
+    height, width = image.shape[:2]
+    if width > max_width or height > max_height:
+        scaling_factor = min(max_width / width, max_height / height)
+        new_width = int(width * scaling_factor)
+        new_height = int(height * scaling_factor)
+        image = cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_AREA)
+    return image
 
 if __name__ == '__main__':
     try:

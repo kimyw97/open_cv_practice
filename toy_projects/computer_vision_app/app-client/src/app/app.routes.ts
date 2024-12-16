@@ -15,4 +15,8 @@ export const routes: Routes = [
     path: 'mosaic',
     loadComponent: () => import('./mosaic/mosaic.page').then( m => m.MosaicPage)
   },
+  {
+    path: 'trace-object',
+    loadComponent: () => import('./trace-object/trace-object.page').then( m => m.TraceObjectPage)
+  },
 ];
